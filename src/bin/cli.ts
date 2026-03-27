@@ -95,7 +95,7 @@ program
   .version("1.0.0")
   .addHelpText(
     "after",
-    `\n${chalk.cyan("Docs:")} ${chalk.gray("em breve...")}\n`
+    `\n${chalk.cyan("Docs:")} ${chalk.gray("https://nexo-js.vercel.app/")}\n`
   );
 
 // ===== DEV =====

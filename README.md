@@ -6,7 +6,7 @@
 Nexo.js é um framework para criação de bots Discord modernos usando TypeScript ou JavaScript, focado em organização, produtividade e escalabilidade desde o primeiro arquivo.
 
 ## 📚 Documentação
-- Site oficial: Em breve...
+- Site oficial: https://nexo-js.vercel.app/
 - Repositório: https://github.com/mitsukiie/Nexo.js
 
 ## ✨ Features
