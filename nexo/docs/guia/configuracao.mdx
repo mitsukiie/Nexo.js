@@ -1,0 +1,264 @@
+---
+sidebar_position: 5
+title: Configuração
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# ⚙️ Configuração (settings)
+
+No Nexo, você configura comportamentos globais no `Bootstrap.init` usando a propriedade `settings`.
+
+:::info
+Nesta página, `paths.commands` e `paths.events` aparecem como exemplos.
+Você pode usar qualquer estrutura de pastas.
+:::
+
+---
+
+## 🚀 Como configurar
+
+Você pode configurar de 2 formas:
+
+1. Inline no `Bootstrap.init` (bom para projetos pequenos)
+2. Arquivo separado `settings.ts` ou `settings.js` (recomendado para projetos médios e grandes)
+
+---
+
+## 🧩 Exemplo inline (simples)
+
+<Tabs groupId="lang-settings-inline">
+<TabItem value="js" label="JavaScript">
+
+```js
+const { Bootstrap } = require('nexo.js');
+const { GatewayIntentBits } = require('discord.js');
+
+async function main() {
+  await Bootstrap.init({
+    token: process.env.DISCORD_TOKEN,
+    intents: [GatewayIntentBits.Guilds],
+    paths: {
+      commands: 'src/commands',
+      events: 'src/events',
+    },
+    settings: {
+      terminal: {
+        mode: 'minimalista',
+        showSlashCommandsRegistred: true,
+      },
+      bot: {
+        cooldown: 5,
+      },
+      custom: {
+        projectName: 'Meu Bot',
+      },
+    },
+  });
+}
+
+main()
+```
+
+	</TabItem>
+	<TabItem value="ts" label="TypeScript">
+
+```ts
+import { Bootstrap } from 'nexo.js';
+import { GatewayIntentBits } from 'discord.js';
+
+await Bootstrap.init({
+  token: process.env.DISCORD_TOKEN,
+  intents: [GatewayIntentBits.Guilds],
+  paths: {
+    commands: 'src/commands',
+    events: 'src/events',
+  },
+  settings: {
+    terminal: {
+      mode: 'minimalista',
+      showSlashCommandsRegistred: true,
+    },
+    bot: {
+      cooldown: 5,
+    },
+    custom: {
+      projectName: 'Meu Bot',
+    },
+  },
+});
+```
+
+	</TabItem>
+</Tabs>
+
+:::tip
+Em projetos pequenos, inline costuma ser suficiente.
+:::
+
+## 📂 Arquivo separado (recomendado)
+
+Para projetos maiores, evite poluir o `Bootstrap.init`.
+
+Estrutura sugerida:
+
+```txt
+📂 src/      
+┣ 📜 index.ts
+┗ 📜 settings.ts
+```
+
+<Tabs groupId="lang-settings-file">
+<TabItem value="js" label="JavaScript">
+
+```js title="src/settings.js"
+module.exports = {
+  terminal: {
+    mode: 'minimalista',
+    showSlashCommandsFiles: false,
+    showSlashCommandsRegistred: true,
+    showEventsFiles: false,
+    showEventsRegistred: true,
+  },
+  bot: {
+    cooldown: 3,
+    guildID: [],
+  },
+  custom: {
+    supportServer: 'https://discord.gg/seu-servidor',
+  },
+};
+```
+
+```js title="src/index.js"
+const { Bootstrap } = require('nexo.js');
+const { GatewayIntentBits } = require('discord.js');
+const settings = require('./settings.js');
+
+async function main() {
+  await Bootstrap.init({
+    token: process.env.DISCORD_TOKEN,
+    intents: [GatewayIntentBits.Guilds],
+    paths: {
+      commands: 'src/commands',
+      events: 'src/events',
+    },
+    settings,
+  });
+}
+
+main();
+```
+
+	</TabItem>
+	<TabItem value="ts" label="TypeScript">
+
+```ts title="src/settings.ts"
+import { Settings } from 'nexo.js';
+
+export const settings: Settings = {
+  terminal: {
+    mode: 'minimalista',
+    showSlashCommandsFiles: false,
+    showSlashCommandsRegistred: true,
+    showEventsFiles: false,
+    showEventsRegistred: true,
+  },
+  bot: {
+    cooldown: 3,
+    guildID: [],
+  },
+  custom: {
+    supportServer: 'https://discord.gg/seu-servidor',
+  },
+};
+```
+
+```ts title="src/index.ts"
+import { Bootstrap } from 'nexo.js';
+import { GatewayIntentBits } from 'discord.js';
+import settings from './settings';
+
+await Bootstrap.init({
+  token: process.env.DISCORD_TOKEN,
+  intents: [GatewayIntentBits.Guilds],
+  paths: {
+    commands: 'src/commands',
+    events: 'src/events',
+  },
+  settings,
+});
+```
+
+	</TabItem>
+</Tabs>
+
+## 🧠 Defaults
+
+O Nexo já possui valores padrão internos.
+Você só precisa sobrescrever o que quiser.
+
+Exemplo: se você definir apenas `bot.cooldown`, os outros campos continuam com os defaults.
+
+:::info
+`settings` é mesclado com os valores padrão automaticamente.
+:::
+
+## 📋 Campos principais
+
+### 🖥️ terminal
+
+Controla como o Nexo exibe informações no console.
+
+```ts
+terminal: {
+  mode: 'informativo' | 'minimalista';
+  showSlashCommandsFiles?: boolean;
+  showSlashCommandsRegistred?: boolean;
+  showEventsFiles?: boolean;
+  showEventsRegistred?: boolean;
+}
+```
+
+- `mode`: define o nível de detalhe dos logs.
+- `showSlashCommandsFiles`: mostra os arquivos de comando encontrados no carregamento.
+- `showSlashCommandsRegistred`: mostra os comandos registrados no Discord.
+- `showEventsFiles`: mostra os arquivos de eventos encontrados.
+- `showEventsRegistred`: mostra os eventos registrados no cliente.
+
+### 🤖 bot
+
+Configurações globais de comportamento.
+
+```ts
+bot: {
+  cooldown: number;
+  guildID: string[];
+}
+```
+
+- `cooldown`: cooldown global padrão em segundos para comandos.
+- `guildID`: lista de IDs de guild para escopo de registro/sincronização quando necessário.
+
+### 🧩 custom
+
+Espaço livre para configurações da sua aplicação.
+
+```ts
+custom: Record<string, any>
+```
+
+Use para dados que não fazem parte do core do Nexo, por exemplo:
+- IDs de canais e cargos
+- URLs internas
+- flags de ambiente
+
+---
+
+## ✅ Boas práticas
+
+- 🗂️ Em projetos médios e grandes, use arquivo separado (`settings.ts` ou `settings.js`).
+- 🧩 Use `custom` para configurações da sua aplicação.
+- 🧼 Mantenha `settings` declarativo (evite lógica de negócio dentro dele).
+- 🎯 Sobrescreva só o necessário e aproveite os defaults do Nexo.

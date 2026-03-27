@@ -1,0 +1,12 @@
+nexo
+src
+node_modules
+
+.gitignore
+.gitattributes
+.git
+
+bun.lock
+
+README.md
+LICENSE

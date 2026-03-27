@@ -1,0 +1,10 @@
+node_modules
+dist
+bun.lock
+
+# nexo
+nexo/build
+nexo/node_modules
+nexo/dist
+nexo/.docusaurus
+nexo/package-lock.json

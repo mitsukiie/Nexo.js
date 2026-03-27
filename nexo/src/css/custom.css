@@ -1,0 +1,87 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+ --ifm-color-primary: #22c55e;
+  --ifm-color-primary-dark: #16a34a;
+  --ifm-color-primary-light: #4ade80;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-code-font-size: 95%;
+  --ifm-font-family-base: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  --ifm-heading-font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --ifm-background-color: #f5fbf7;
+  --ifm-navbar-background-color: rgba(245, 251, 247, 0.88);
+  --ifm-navbar-link-hover-color: #205d3b;
+  --ifm-footer-background-color: #0f172a;
+  --ifm-footer-color: #cbd5e1;
+  --ifm-footer-link-color: #93c5fd;
+  --ifm-footer-title-color: #f8fafc;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --ifm-background-color: #0b1120;
+  --ifm-navbar-background-color: rgba(11, 17, 32, 0.9);
+  --ifm-footer-background-color: #020617;
+  --ifm-footer-color: #94a3b8;
+  --ifm-footer-link-color: #60a5fa;
+  --ifm-footer-title-color: #f1f5f9;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+.navbar {
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+}
+
+.button.button--secondary {
+  background: linear-gradient(135deg, #3cad6e, #2e8555);
+  color: #fff;
+  border: none;
+}
+
+.button.button--outline {
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #fff;
+}
+
+.button.button--outline:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.theme-doc-markdown h1,
+.theme-doc-markdown h2,
+.theme-doc-markdown h3 {
+  letter-spacing: -0.015em;
+}
+
+.footer {
+  border-top: 1px solid rgba(148, 163, 184, 0.18);
+  background: linear-gradient(180deg, var(--ifm-footer-background-color) 0%, #020617 100%);
+}
+
+.footer__title {
+  letter-spacing: 0.01em;
+}
+
+.footer__link-item:hover {
+  color: #bfdbfe;
+  text-decoration: none;
+}

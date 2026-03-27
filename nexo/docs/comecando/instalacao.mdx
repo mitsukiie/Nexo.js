@@ -1,0 +1,115 @@
+---
+sidebar_position: 2
+title: Instalação
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Instalação
+
+## 📥 Instalar
+
+<Tabs groupId="runtime-install">
+  <TabItem value="node" label="Node.js">
+
+```bash
+npm install nexo.js discord.js
+```
+
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+
+```bash
+bun add nexo.js discord.js
+```
+
+  </TabItem>
+</Tabs>
+
+## 📁 Caminhos de exemplo
+
+No Nexo, os caminhos de comandos e eventos são definidos por você em `Bootstrap.init({ paths })`.
+
+:::tip Dica
+Por padrão na documentação usamos `src/commands` e `src/events` como exemplo, mas você pode usar qualquer estrutura de pastas.
+:::
+
+## ⚙️ Inicialização
+
+<Tabs groupId="lang-bootstrap">
+  <TabItem value="js" label="JavaScript">
+
+```js
+const { Bootstrap } = require('nexo.js');
+const { GatewayIntentBits } = require('discord.js');
+
+async function main() {
+  await Bootstrap.init({
+    token: process.env.TOKEN,
+    intents: [GatewayIntentBits.Guilds],
+    paths: {
+      commands: 'src/commands',
+      events: 'src/events',
+    },
+  });
+}
+
+main();
+```
+
+  </TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+```ts
+import { Bootstrap } from 'nexo.js';
+import { GatewayIntentBits } from 'discord.js';
+
+await Bootstrap.init({
+  token: process.env.TOKEN,
+  intents: [GatewayIntentBits.Guilds],
+  paths: {
+    commands: 'src/commands', // exemplo
+    events: 'src/events', // exemplo
+  },
+});
+```
+
+  </TabItem>
+</Tabs>
+
+:::info Importante
+O Nexo carrega arquivos `.ts` e `.js` desses diretórios.
+:::
+
+## ▶️ Executando o bot
+
+### Desenvolvimento
+<Tabs groupId="runtime-run">
+  <TabItem value="node" label="Node.js">
+```bash
+npx nexo dev
+```
+  </TabItem>
+  <TabItem value="bun" label="Bun">
+```bash
+bunx nexo dev
+```
+  </TabItem>
+</Tabs>
+
+### Opções úteis
+```bash
+# Arquivo personalizado
+npx nexo dev src/index.ts
+
+# Modo watch
+npx nexo dev --watch
+```
+
+:::info O que o CLI faz por você
+- Detecta automaticamente Node.js ou Bun
+- Executa .ts e .js sem configuração extra
+- Carrega .env automaticamente (se existir)
+- Reinicia o bot no modo watch
+:::

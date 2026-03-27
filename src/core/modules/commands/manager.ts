@@ -1,0 +1,26 @@
+import { Collection } from 'discord.js';
+import type { Command } from '@types';
+
+export class CommandManager {
+  private readonly commands = new Collection<string, Command>();
+
+  public add(command: Command) {
+    this.commands.set(command.name, command);
+  }
+
+  public get(name: string) {
+    return this.commands.get(name);
+  }
+
+  public all() {
+    return Array.from(this.commands.values());
+  }
+
+  public clear() {
+    this.commands.clear();
+  }
+
+  public size() {
+    return this.commands.size;
+  }
+}

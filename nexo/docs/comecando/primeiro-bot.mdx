@@ -1,0 +1,263 @@
+---
+sidebar_position: 3
+title: Primeiro Bot
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 🤖 Primeiro Bot
+
+Neste guia você vai criar seu primeiro bot funcional com Nexo.js.
+
+---
+
+## 🚀 Como funciona
+
+- 🧠 Você cria arquivos em pastas específicas.
+- 📁 Nexo carrega automaticamente comandos e eventos dos caminhos definidos em `paths.commands` e `paths.events`.
+- ⚡ O Bot inicia com `Bootstrap.init()`.
+- ✅ Não precisa de registro manual de comandos ou eventos.
+
+---
+
+## 📁 Estrutura mínima (exemplo)
+
+Exemplo de estrutura de pastas:
+
+```
+📂 src/
+┣ 📂 commands/
+┃ ┗ 📂 util/             (categoria)
+┃   ┗ 📜 ping.ts         (seu primeiro comando)
+┣ 📂 events/
+┃ ┗ 📜 ready.ts          (evento de inicialização)
+┗ 📜 index.ts            (arquivo principal)
+```
+
+:::info Estrutura esperada
+Este é apenas um exemplo usando `src/commands` e `src/events`.
+:::
+
+
+## 🚀 Inicializando o bot
+
+Crie seu arquivo principal (por exemplo, `src/index.ts`) com a inicialização do bot usando `Bootstrap.init()`:
+
+<Tabs groupId="lang-bootstrap">
+  <TabItem value="js" label="JavaScript">
+
+```js
+const { Bootstrap } = require('nexo.js');
+const { GatewayIntentBits } = require('discord.js');
+
+async function main() {
+  await Bootstrap.init({
+    token: process.env.TOKEN,
+    intents: [GatewayIntentBits.Guilds],
+    paths: {
+      commands: 'src/commands', // exemplo
+      events: 'src/events', // exemplo
+    },
+  });
+}
+
+main();
+```
+
+  </TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+```ts
+import { Bootstrap } from 'nexo.js';
+import { GatewayIntentBits } from 'discord.js';
+
+await Bootstrap.init({
+  token: process.env.TOKEN,
+  intents: [GatewayIntentBits.Guilds],
+  paths: {
+    commands: 'src/commands', // exemplo
+    events: 'src/events', // exemplo
+  },
+});
+```
+
+  </TabItem>
+</Tabs>
+
+:::info O que acontece aqui
+- **`token`**: Seu token de bot do Discord (mais abaixo como obter).
+- **`intents`**: Permissões que o bot precisa. Aqui usamos apenas `Guilds` (o mínimo para começar).
+  - Veja [discord.js intents](https://discord.js.org/docs/packages/discord.js/14.25.1/GatewayIntentBits:Enum) para mais opções.
+- **`paths`**: Diretórios onde o Nexo encontrará comandos e eventos para carregamento automático.
+- **`await`**: `Bootstrap.init()` é assíncrono e inicializa o bot.
+:::
+
+## 🔘 Primeiro comando
+
+Crie o arquivo do comando no diretório definido em `paths.commands` (exemplo: `src/commands/util/ping.ts`):
+
+<Tabs groupId="lang-command-first">
+	<TabItem value="js" label="JavaScript">
+
+```js
+const { createCommand, CommandType } = require('nexo.js');
+
+module.exports = createCommand({
+  name: 'ping',
+  description: 'Responde com pong!',
+  type: CommandType.ChatInput,
+  async run(interaction) {
+    await interaction.reply({ content: 'Pong! 🏓' });
+  },
+});
+```
+
+	</TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+```ts
+import { createCommand, CommandType } from 'nexo.js';
+
+export default createCommand({
+  name: 'ping',
+  description: 'Responde com pong!',
+  type: CommandType.ChatInput,
+  async run(interaction) {
+    await interaction.reply({ content: 'Pong! 🏓' });
+  },
+});
+```
+
+	</TabItem>
+</Tabs>
+
+:::info
+- **`export default`**: Nexo busca exportações padrão em cada arquivo.
+- **`createCommand(...)`**: Função que registra um comando.
+- **`CommandType.ChatInput`**: Comando de slash (começando com `/`).
+- **`interaction`**: Objeto da interação do Discord (contém dados do usuário, servidor, etc).
+:::
+
+## ✅ Evento de inicialização
+
+Crie o arquivo do evento no diretório definido em `paths.events` (exemplo: `src/events/ready.ts`):
+
+<Tabs groupId="lang-event-first">
+	<TabItem value="js" label="JavaScript">
+
+```js
+const { createEvent, EventType } = require('nexo.js');
+
+module.exports = createEvent({
+  name: 'ready',
+  once: true,
+  run(client) {
+    console.log(`✅ Bot ${client.user?.username} está online!`);
+  },
+});
+```
+
+	</TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+```ts
+import { createEvent, EventType } from 'nexo.js';
+
+export default createEvent({
+  name: 'ready',
+  once: true, // Executar apenas uma vez
+  run(client) {
+    console.log(`✅ Bot ${client.user?.username} está online!`);
+  },
+});
+```
+
+	</TabItem>
+</Tabs>
+
+:::info
+- **`EventType.Discord`**: Evento nativo do Discord.js (em vez de um evento customizado).
+- **`once: true`**: Dispara apenas uma vez quando o bot inicia.
+  - Sem `once`, dispararia toda vez que o evento ocorrer.
+- **`name: 'ready'`**: Nome do evento Discord.js (corresponde a `client.on('ready', ...)`)
+- **`client`**: Cliente discord.js com dados do bot (usuário, guilds, etc).
+:::
+
+## ▶️ Executando o bot
+
+Rode o bot em modo desenvolvimento:
+
+<Tabs groupId="runtime-exec">
+	<TabItem value="npm" label="npm">
+
+```bash
+npm run dev
+```
+
+	</TabItem>
+	<TabItem value="bun" label="bun">
+
+```bash
+bun run dev
+```
+
+	</TabItem>
+</Tabs>
+
+Ou use o CLI do Nexo diretamente:
+
+```bash
+# npm
+npx nexo dev
+
+# bun
+bunx nexo dev
+```
+
+## 🎯 Resultado esperado
+
+Quando tudo funcionar:
+
+1. ✅ Bot aparece **online** no Discord
+2. ✅ Console mostra: `✅ Bot [seu-bot-nome] está online!`
+3. ✅ Comando `/ping` aparece na lista de comandos
+4. ✅ Digitar `/ping` e pressionar Enter → responde **Pong! 🏓**
+
+Pronto! Seu primeiro bot está rodando! 🎉
+
+---
+
+## 💡 Dicas rápidas
+
+### 🔐 Token seguro
+
+Para não expor seu token no código:
+
+1. **Crie um arquivo `.env`** na raiz do projeto:
+
+```env
+DISCORD_TOKEN=MTA1Nzk4OTU5NzE2NzY0Nzc4Nw.xxx
+```
+
+2. **Nexo carrega automaticamente** — você acessa via `process.env.DISCORD_TOKEN`
+
+:::warning Importante
+- **Nunca commite `.env`** no Git — adicione à `.gitignore`
+- Seu token é como uma **senha** — qualquer pessoa pode usar para controlar seu bot
+- Se expuser o token, **revogue-o imediatamente** no Dashboard do Discord
+:::
+
+### ⚠️ Erros comuns
+
+| Erro | Solução |
+|------|---------|
+| `Error: no token provided` | Verifique se `.env` existe e tem `DISCORD_TOKEN` com valor correto |
+| `Comando `/ping` não aparece` | Reinicie o bot ou execute `/` novamente para sincronizar comandos |
+| `Error: GUILDS intent is required` | Adicione `GatewayIntentBits.Guilds` aos intents |
+| `Bot não conecta` | Verifique token, internet e se o token não foi revogado |
+
+**📚 Próximos passos:**
+- Leia [Comandos →](../guia/comandos.mdx) para aprender mais detalhes
+- Leia [Eventos →](../guia/eventos.mdx) para outros eventos
+- Explore [Responders →](../guia/responders.mdx) para interações

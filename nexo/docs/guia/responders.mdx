@@ -1,0 +1,285 @@
+---
+sidebar_position: 3
+title: Responders
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 📌 Responders
+
+Os **responders** permitem lidar com interações dinâmicas no Discord, como **botões, selects e modais**, usando `customId` com parâmetros.
+
+---
+
+## 🚀 Como funciona
+
+- 🎯 O matching é feito pelo `customId`.
+- 🧠 `createResponder(...)` registra automaticamente a rota.
+- 🧩 Suporta parâmetros dinâmicos (`:param`).
+- 🔎 `run` recebe `interaction` + `params`.
+- ⚙️ Suporte a `lifetime` e `cache`.
+
+:::warning Importante
+Responders **não são carregados automaticamente**.  
+Você precisa importar o arquivo em algum ponto do bot.
+Se o responder for criado por um comando/evento, esse comando/evento deve estar dentro dos diretórios configurados em `paths.commands` ou `paths.events`.
+:::
+
+---
+
+## 🔗 Fluxo com comando
+
+1. O comando cria um componente com `customId`.
+2. O responder escuta esse mesmo `customId`.
+
+## 🧪 Exemplo
+
+<Tabs groupId="lang-responder-short">
+	<TabItem value="js" label="JavaScript">
+
+```js
+const { createCommand, createResponder, CommandType, ResponderType } = require('nexo.js');
+
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+
+// responder
+createResponder({
+  customId: "user/button",
+  type: ResponderType.Button,
+
+  async run(interaction) {
+    await interaction.reply("Botão clicado!");
+  },
+});
+
+// comando
+module.exports = createCommand({
+  // ...
+  async run(interaction) {
+    const row = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setCustomId("user/button")
+        .setLabel("Clicar")
+        .setStyle(ButtonStyle.Success)
+    );
+
+    // ...
+  },
+});
+```
+
+	</TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+```ts
+import { createCommand, createResponder, CommandType, ResponderType } from 'nexo.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
+
+// responder
+createResponder({
+  customId: "user/button",
+  type: ResponderType.Button,
+
+  async run(interaction) {
+    await interaction.reply("Botão clicado!");
+  },
+});
+
+// comando
+export default createCommand({
+  ...
+  async run(interaction) {
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+      new ButtonBuilder()
+        .setCustomId("user/button")
+        .setLabel('Clicar')
+        .setStyle(ButtonStyle.Success),
+    );
+    ...
+  },
+});
+```
+
+	</TabItem>
+</Tabs>
+
+:::tip
+Declare o responder fora do `run` para evitar múltiplos registros.
+:::
+
+## 📋 Campos do responder
+
+| Campo | Tipo | Obrigatório | Descrição |
+|-------|------|-------------|-----------|
+| `customId` | `string` | Sim | Rota da interação |
+| `type` | `ResponderType \| ResponderType[]` | Sim | Tipo(s) de interação |
+| `run` | `function` | Sim | Função executada |
+| `parse` | `ZodTypeAny \| (params) => any` | Não | Validação |
+| `lifetime` | `'once' \| 'temporary'` | Não | Controle de uso |
+| `expire` | `number` | Não* | Expiração (ms) |
+| `cache` | `'cached' \| 'guild'` | Não | Contexto |
+
+:::info Regra
+Se usar `temporary`, `expire` é obrigatório.
+:::
+
+## 🎯 Tipos de responder
+
+<Tabs groupId="responder-types">
+  <TabItem value="button" label="Button">
+
+```ts
+type: ResponderType.Button
+```
+
+  </TabItem>
+  <TabItem value="modal" label="Modal">
+
+```ts
+type: ResponderType.Modal
+```
+
+  </TabItem>
+  <TabItem value="selects" label="Selects">
+
+```ts
+type: ResponderType.SelectString,
+type: ResponderType.SelectUser,
+type: ResponderType.SelectRole,
+type: ResponderType.SelectChannel,
+type: ResponderType.SelectMentionable,
+```
+
+  </TabItem>
+</Tabs>
+
+Também é possível registrar o mesmo responder para mais de um tipo:
+
+```ts
+type: [ResponderType.Button, ResponderType.SelectString]
+```
+
+Nesse caso, o `interaction` vira uma união dos dois tipos e você deve fazer guarda de tipo no `run`:
+
+```ts
+createResponder({
+  customId: 'responder',
+  type: [ResponderType.Button, ResponderType.SelectString],
+
+  async run(interaction) {
+    if (interaction.isButton()) {
+      await interaction.reply(`Botão clicado`);
+      return;
+    }
+
+    if (interaction.isStringSelectMenu()) {
+      await interaction.reply(`Select usado: ${interaction.values.join(', ')}`);
+    }
+  },
+});
+```
+
+## 🧱 Estrutura da função run
+A função `run` recebe dois parâmetros:
+
+```ts
+  run(interaction, params)
+```
+
+- **interaction** → interação do Discord tipada automaticamente
+- **params** → parâmetros extraídos do `customId`
+
+## 🧩 Parâmetros na rota
+
+Parâmetros são definidos usando `:` dentro do `customId`.
+
+Exemplo:
+
+```ts
+customId: 'responder/:id'
+```
+
+Também é possível ter múltiplos parâmetros:
+
+```ts
+customId: 'responder/:id/:name'
+```
+
+No `run`, os valores chegam em `params`:
+
+```ts
+async run(interaction, params) {
+  // params.id, params.name...
+}
+```
+
+### Destructuring de parâmetros
+Você também pode usar **destructuring** diretamente nos parâmetros:
+
+```ts
+async run(interaction, { id, name }) {
+  // id, name..
+}
+```
+
+## 🧠 Parse de parâmetros
+
+O `parse` permite transformar ou validar os parâmetros antes de executar o responder.
+
+Ele pode ser:
+
+- um **schema Zod**
+- uma **função manual**
+
+```ts
+parse: schema.parse
+// ou
+parse: (params) => ({ id: Number(params.id) })
+```
+
+Se nenhum `parse` for definido, os parâmetros serão **strings**.
+
+## ⏱️ Lifetime e expiração
+Os responders podem ter controle de uso usando lifetime.
+
+### `lifetime: 'once'`
+Permite usar o responder **apenas uma vez**.
+
+```ts
+lifetime: 'once',
+```
+
+### `lifetime: 'temporary'`
+Permite usar o responder por um **tempo limitado**.
+
+```ts
+lifetime: 'temporary',
+expire: 15_000
+```
+
+## 🔐 Cache e contexto
+
+Use `cache` para limitar onde a interação pode rodar:
+
+- `cache: 'guild'` → exige servidor
+- `cache: 'cached'` → exige servidor em cache
+
+Quando a regra não é atendida, o bot responde com mensagem efêmera automaticamente.
+
+---
+
+## ✅ Boas práticas
+
+- 🧱 Use padrões de `customId` (`grupo/:id/acao`)
+- 🧪 Valide parâmetros com `parse`
+- ⏳ Use `temporary` para ações sensíveis
+- 🔁 Use `once` em confirmações únicas
+- 🧼 Separe lógicas pesadas
+
+## ❌ Erros comuns
+
+- Declarar `temporary` sem `expire` (gera erro no registro)
+- Não importar o arquivo de responder em nenhum ponto do boot
+- Misturar `customId` sem padrão, dificultando manutenção
+- Ignorar validação de `params` em fluxos críticos

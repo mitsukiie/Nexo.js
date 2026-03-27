@@ -1,2 +1,144 @@
 # Nexo.js
-Em breve...
+![npm](https://img.shields.io/npm/v/nexo.js)
+![license](https://img.shields.io/npm/l/nexo.js)
+![downloads](https://img.shields.io/npm/dm/nexo.js)
+
+Nexo.js é um framework para criação de bots Discord modernos usando TypeScript ou JavaScript, focado em organização, produtividade e escalabilidade desde o primeiro arquivo.
+
+## 📚 Documentação
+- Site oficial: Em breve...
+- Repositório: https://github.com/mitsukiie/Nexo.js
+
+## ✨ Features
+- ⚡ Setup em segundos
+- 📂 Auto carregamento de comandos e eventos
+- 🧠 API tipada
+- 🧰 CLI integrada
+- 🔄 Compatível com Node.js e Bun
+- 📦 Suporte a ESM e CommonJS
+
+## 🤔 Por que usar Nexo.js?
+
+Criar bots apenas com discord.js exige estrutura manual,
+carregamento de arquivos e muito boilerplate.
+
+O Nexo.js resolve isso oferecendo:
+
+- estrutura pronta
+- carregamento automático
+- padrão escalável
+- experiência moderna de desenvolvimento
+
+
+
+## 📦 Instalação
+
+```bash
+npm install nexo.js discord.js
+```
+
+Com Bun:
+
+```bash
+bun add nexo.js discord.js
+```
+
+## ⚙️ Configuração
+Crie um arquivo .env:
+```txt
+TOKEN=seu_token_aqui
+```
+
+## ⚡ Início rápido (JavaScript)
+
+Crie um arquivo de entrada (exemplo: `src/index.js`):
+
+```js
+const { Bootstrap } = require('nexo.js');
+const { GatewayIntentBits } = require('discord.js');
+
+async function main() {
+    await Bootstrap.init({
+        token: process.env.TOKEN,
+        intents: [GatewayIntentBits.Guilds],
+        paths: {
+            commands: 'src/commands',
+            events: 'src/events',
+        },
+    });
+}
+
+main()
+```
+
+
+### 📝 Exemplo de comando
+
+`src/commands/util/ping.ts`
+
+```ts
+const { createCommand, CommandType } = require('nexo.js');
+
+module.exports = createCommand({
+    name: 'ping',
+    description: 'Responde com pong!',
+    type: CommandType.ChatInput,
+    async run(interaction) {
+        await interaction.reply({ content: 'Pong!' });
+    },
+});
+```
+
+### 📡 Exemplo de evento
+
+`src/events/ready.ts`
+
+```ts
+const { createEvent } = require('nexo.js');
+
+module.exports = createEvent({
+    name: 'ready',
+    once: true,
+    run(client) {
+        console.log(`Bot ${client.user?.username} está online!`);
+    },
+});
+```
+
+## 🧰 CLI
+O Nexo.js inclui uma CLI própria.
+
+```bash
+# desenvolvimento
+npx nexo dev
+
+# arquivo customizado
+npx nexo dev src/index.ts
+
+# watch mode
+npx nexo dev --watch
+
+# produção
+npx nexo start dist/bot.js
+```
+
+## 📂 Estrutura sugerida
+
+```txt
+src/
+  commands/
+    util/
+      ping.ts
+  events/
+    ready.ts
+  index.ts
+```
+
+## 🚧 Status do projeto
+
+O Nexo.js está em desenvolvimento ativo.
+Feedbacks e contribuições são bem-vindos!
+
+## Licença
+
+MIT. Veja o arquivo `LICENSE`.

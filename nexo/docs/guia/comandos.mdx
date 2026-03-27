@@ -1,0 +1,180 @@
+---
+sidebar_position: 1
+title: Comandos
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Comandos
+
+Comandos são a principal forma de interação com o bot.
+
+---
+
+## 🚀 Como funciona
+
+- ⚡ O Nexo carrega automaticamente os comandos ao iniciar o bot.
+- 📄 O diretório de comandos é definido por você em `paths.commands` no `Bootstrap.init`.
+- 📦 Cada arquivo deve exportar um `default`.
+- 🗂️ O primeiro nível de subpastas é tratado como categoria.
+
+---
+
+## 🧪 Exemplo curto
+
+<Tabs groupId="lang-command-short">
+	<TabItem value="js" label="JavaScript">
+
+```js
+const { createCommand, CommandType } = require('nexo.js');
+
+module.exports = createCommand({
+  name: 'ping',
+  description: 'Responde com pong!',
+  type: CommandType.ChatInput,
+  async run(interaction) {
+    await interaction.reply({ content: 'Pong! 🏓' });
+  },
+});
+```
+
+	</TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+```ts
+import { createCommand, CommandType } from 'nexo.js';
+
+export default createCommand({
+  name: 'ping',
+  description: 'Responde com pong!',
+  type: CommandType.ChatInput,
+  async run(interaction) {
+    await interaction.reply({ content: 'Pong! 🏓' });
+  },
+});
+```
+
+	</TabItem>
+</Tabs>
+
+## 📋 Campos do comando
+
+| Campo | Tipo | Obrigatório | Descrição |
+|-------|------|-------------|-----------|
+| `name` | `string` | Sim | Nome único do comando |
+| `description` | `string` | Sim | Texto mostrado no Discord |
+| `type` | `CommandType` | Sim | Tipo de comando |
+| `run` | `function` | Sim | Função executada |
+| `options` | `array` | Não | Parâmetros do comando |
+| `cooldown` | `number` | Não | Tempo entre usos |
+| `autocomplete` | `function` | Não | Sugestões em tempo real |
+| `defaultMemberPermission` | `PermissionResolvable` | Não | Permissão exigida do usuário |
+| `botpermission` | `PermissionFlagsBits key` | Não | Permissão exigida do bot |
+| `allowIds` | `string[]` | Não | IDs permitidos |
+| `dmPermission` | `boolean` | Não | Permite uso em DM |
+| `nsfw` | `boolean` | Não | Restringe a canal NSFW |
+
+## 🎯 Tipos de comandos
+
+O Nexo suporta diferentes formas de interação:
+
+<Tabs groupId="command-types"> 
+<TabItem value="chatinput" label="Slash">
+```js
+type: CommandType.ChatInput
+```
+
+Comandos tradicionais com `/`.
+
+</TabItem> <TabItem value="user" label="User">
+```js
+type: CommandType.User
+```
+
+Menu ao clicar com botão direito em um usuário.
+
+</TabItem> <TabItem value="message" label="Message">
+```js
+type: CommandType.Message
+```
+
+Menu ao clicar com botão direito em uma mensagem.
+
+</TabItem> 
+</Tabs>
+
+:::info Na prática
+O tipo mais usado é `ChatInput`.
+:::
+
+## 🔐 Permissões e controle
+
+Use esses campos para restringir uso:
+
+- `defaultMemberPermission`: permissão do usuário
+- `botpermission`: permissão do bot
+- `allowIds`: libera só para IDs de usuários específicos
+- `dmPermission`: bloqueia/libera em DM
+- `nsfw`: exige canal NSFW
+
+:::warning Importante
+Sempre valide permissões em comandos administrativos.
+:::
+
+## 🤖 Parâmetros (options) e Autocomplete
+
+### Options 
+Define parâmetros do comando.
+```js
+options: [
+  {
+    type: ApplicationCommandOptionType.String,
+    name: 'message',
+    description: 'Mensagem',
+    required: true,
+  }
+]
+  ```
+
+---
+
+### Autocomplete
+Responde sugestões em tempo real:
+```js
+autocomplete: async (interaction, focused) => {
+  const choices = ['Opção 1', 'Opção 2'];
+
+  await interaction.respond(
+    choices.map(c => ({ name: c, value: c }))
+  );
+}
+```
+  
+## 🔄 Subcomandos
+
+Subcomandos são automáticos quando você cria uma pasta dentro da categoria.
+
+### 📁 Estrutura
+
+```txt
+src/
+  commands/
+    admin/
+      user/
+        ban.ts
+        kick.ts
+        mute.ts
+```
+
+### 🎯 Resultado
+
+```
+/user ban
+/user kick
+/user mute
+```
+
+:::tip
+Cada arquivo dentro da pasta vira um subcomando.
+:::

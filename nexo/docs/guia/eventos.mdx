@@ -1,0 +1,77 @@
+---
+sidebar_position: 2
+title: Eventos
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Eventos
+
+Eventos permitem reagir ao que acontece no bot e no Discord, como inicialização, entrada de membros e criação de mensagens.
+
+---
+
+## 🚀 Como funciona
+
+- 📄 O diretório de eventos é definido por você em `paths.events` no `Bootstrap.init`.
+- 📁 O carregamento é recursivo (subpastas são suportadas).
+- 🧩 Não há obrigatoriedade de categorias.
+- 📦 Cada arquivo deve exportar um `default`.
+
+---
+
+## 🧪 Exemplo básico
+
+<Tabs groupId="lang-event-first">
+	<TabItem value="js" label="JavaScript">
+
+```js
+const { createEvent, EventType } = require('nexo.js');
+
+module.exports = createEvent({
+  name: 'ready',
+  once: true,
+  run(client) {
+    console.log(`✅ Bot ${client.user?.username} está online!`);
+  },
+});
+```
+
+	</TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+```ts
+import { createEvent, EventType } from 'nexo.js';
+
+export default createEvent({
+  name: 'ready',
+  once: true, // Executar apenas uma vez
+  run(client) {
+    console.log(`✅ Bot ${client.user?.username} está online!`);
+  },
+});
+```
+
+	</TabItem>
+</Tabs>
+
+## 📋 Estrutura do evento
+
+| Campo | Tipo | Obrigatório | Descrição |
+|-------|------|-------------|-----------|
+| `name` | `keyof ClientEvents` | Sim | Nome do evento |
+| `once` | `boolean` | Não | Executa apenas uma vez |
+| `run` | `function` | Sim | Função executada |
+
+## 🧠 Assinatura do `run`
+
+O `run` recebe:
+
+1. Argumentos originais do evento do Discord.js
+2. `client` como último argumento
+
+## 🔁 once vs on
+
+- `once: true` → executa apenas uma vez.
+- Sem `once` → executa em todos os disparos.

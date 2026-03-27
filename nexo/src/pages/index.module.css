@@ -1,0 +1,107 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroBanner {
+  position: relative;
+  overflow: hidden;
+  padding: 5.5rem 0 4rem;
+  background:
+    radial-gradient(circle at 16% 12%, rgba(74, 222, 128, 0.22), transparent 35%),
+    radial-gradient(circle at 80% 18%, rgba(45, 212, 191, 0.2), transparent 36%),
+    linear-gradient(145deg, #0f3f36 0%, #0f172a 42%, #1f2937 100%);
+}
+
+.heroGlow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(34, 197, 94, 0.35),
+    transparent 70%
+  );
+  filter: blur(140px);
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.heroEyebrow {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #f8fafc;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  font-size: 0.82rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.heroDescription {
+  max-width: 700px;
+  margin: 0.7rem 0 0;
+  color: rgba(248, 250, 252, 0.9);
+  line-height: 1.7;
+  font-size: 1.03rem;
+}
+
+.heroBanner :global(.hero__title),
+.heroBanner :global(.hero__subtitle) {
+  color: #f8fafc;
+  text-shadow: 0 6px 24px rgba(0, 0, 0, 0.28);
+}
+
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 4.2rem 1.2rem 3.5rem;
+  }
+
+  .heroGlow {
+    width: 320px;
+    height: 320px;
+    bottom: -92px;
+  }
+
+  .heroDescription {
+    font-size: 0.96rem;
+    line-height: 1.6;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .heroBadges {
+    justify-content: center;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 0.8rem;
+  margin-top: 1.35rem;
+}
+
+.buttons :global(.button--secondary) {
+  background: #22c55e;
+  box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
+}
+
+.buttons :global(.button--outline) {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+@media screen and (max-width: 530px) {
+  .buttons {
+    flex-direction: column;
+  }
+}
