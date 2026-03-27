@@ -1,7 +1,7 @@
 # Nexo.js
-![npm](https://img.shields.io/npm/v/nexo.js)
-![license](https://img.shields.io/npm/l/nexo.js)
-![downloads](https://img.shields.io/npm/dm/nexo.js)
+![npm](https://img.shields.io/npm/v/%40mitsuk%2Fnexo.js)
+![license](https://img.shields.io/npm/l/%40mitsuk%2Fnexo.js)
+![downloads](https://img.shields.io/npm/dm/%40mitsuk%2Fnexo.js)
 
 Nexo.js é um framework para criação de bots Discord modernos usando TypeScript ou JavaScript, focado em organização, produtividade e escalabilidade desde o primeiro arquivo.
 
@@ -34,13 +34,13 @@ O Nexo.js resolve isso oferecendo:
 ## 📦 Instalação
 
 ```bash
-npm install nexo.js discord.js
+npm install @mitsuk/nexo.js discord.js
 ```
 
 Com Bun:
 
 ```bash
-bun add nexo.js discord.js
+bun add @mitsuk/nexo.js discord.js
 ```
 
 ## ⚙️ Configuração
@@ -54,7 +54,7 @@ TOKEN=seu_token_aqui
 Crie um arquivo de entrada (exemplo: `src/index.js`):
 
 ```js
-const { Bootstrap } = require('nexo.js');
+const { Bootstrap } = require('@mitsuk/nexo.js');
 const { GatewayIntentBits } = require('discord.js');
 
 async function main() {
@@ -77,7 +77,7 @@ main()
 `src/commands/util/ping.ts`
 
 ```ts
-const { createCommand, CommandType } = require('nexo.js');
+const { createCommand, CommandType } = require('@mitsuk/nexo.js');
 
 module.exports = createCommand({
     name: 'ping',
@@ -94,7 +94,7 @@ module.exports = createCommand({
 `src/events/ready.ts`
 
 ```ts
-const { createEvent } = require('nexo.js');
+const { createEvent } = require('@mitsuk/nexo.js');
 
 module.exports = createEvent({
     name: 'ready',

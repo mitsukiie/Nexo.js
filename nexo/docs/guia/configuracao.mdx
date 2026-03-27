@@ -32,7 +32,7 @@ Você pode configurar de 2 formas:
 <TabItem value="js" label="JavaScript">
 
 ```js
-const { Bootstrap } = require('nexo.js');
+const { Bootstrap } = require('@mitsuk/nexo.js');
 const { GatewayIntentBits } = require('discord.js');
 
 async function main() {
@@ -65,7 +65,7 @@ main()
 	<TabItem value="ts" label="TypeScript">
 
 ```ts
-import { Bootstrap } from 'nexo.js';
+import { Bootstrap } from '@mitsuk/nexo.js';
 import { GatewayIntentBits } from 'discord.js';
 
 await Bootstrap.init({
@@ -132,7 +132,7 @@ module.exports = {
 ```
 
 ```js title="src/index.js"
-const { Bootstrap } = require('nexo.js');
+const { Bootstrap } = require('@mitsuk/nexo.js');
 const { GatewayIntentBits } = require('discord.js');
 const settings = require('./settings.js');
 
@@ -155,7 +155,7 @@ main();
 	<TabItem value="ts" label="TypeScript">
 
 ```ts title="src/settings.ts"
-import { Settings } from 'nexo.js';
+import { Settings } from '@mitsuk/nexo.js';
 
 export const settings: Settings = {
   terminal: {
@@ -176,7 +176,7 @@ export const settings: Settings = {
 ```
 
 ```ts title="src/index.ts"
-import { Bootstrap } from 'nexo.js';
+import { Bootstrap } from '@mitsuk/nexo.js';
 import { GatewayIntentBits } from 'discord.js';
 import settings from './settings';
 
