@@ -14,7 +14,7 @@ function HomepageHeader() {
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className={styles.heroGlow} />
       <div className="container">
-        <p className={styles.heroEyebrow}>nexo.js • Discord Toolkit</p>
+        <p className={styles.heroEyebrow}>nexocord • Discord Toolkit</p>
         <Heading as="h1" className="hero__title">
           {siteConfig.title}
         </Heading>
@@ -46,7 +46,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="Documentacao pratica para usar o nexo.js em Node.js ou Bun com JS e TS.">
+      description="Documentacao pratica para usar o nexocord em Node.js ou Bun com JS e TS.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

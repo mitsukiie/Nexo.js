@@ -14,14 +14,14 @@ import TabItem from '@theme/TabItem';
   <TabItem value="node" label="Node.js">
 
 ```bash
-npm install @mitsuk/nexo.js discord.js
+npm install nexocord discord.js
 ```
 
   </TabItem>
   <TabItem value="bun" label="Bun">
 
 ```bash
-bun add @mitsuk/nexo.js discord.js
+bun add nexocord discord.js
 ```
 
   </TabItem>
@@ -41,7 +41,7 @@ Por padrão na documentação usamos `src/commands` e `src/events` como exemplo,
   <TabItem value="js" label="JavaScript">
 
 ```js
-const { Bootstrap } = require('@mitsuk/nexo.js');
+const { Bootstrap } = require('nexocord');
 const { GatewayIntentBits } = require('discord.js');
 
 async function main() {
@@ -62,7 +62,7 @@ main();
   <TabItem value="ts" label="TypeScript">
 
 ```ts
-import { Bootstrap } from '@mitsuk/nexo.js';
+import { Bootstrap } from 'nexocord';
 import { GatewayIntentBits } from 'discord.js';
 
 await Bootstrap.init({

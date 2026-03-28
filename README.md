@@ -1,13 +1,12 @@
-# Nexo.js
-![npm](https://img.shields.io/npm/v/%40mitsuk%2Fnexo.js)
-![license](https://img.shields.io/npm/l/%40mitsuk%2Fnexo.js)
-![downloads](https://img.shields.io/npm/dm/%40mitsuk%2Fnexo.js)
+# Nexocord
+![npm](https://img.shields.io/npm/v/%40mitsuk%2Fnexocord)
+![license](https://img.shields.io/npm/l/%40mitsuk%2Fnexocord)
 
-Nexo.js é um framework para criação de bots Discord modernos usando TypeScript ou JavaScript, focado em organização, produtividade e escalabilidade desde o primeiro arquivo.
+Nexocord é um framework para criação de bots Discord modernos usando TypeScript ou JavaScript, focado em organização, produtividade e escalabilidade desde o primeiro arquivo.
 
 ## 📚 Documentação
-- Site oficial: https://nexo-js.vercel.app/
-- Repositório: https://github.com/mitsukiie/Nexo.js
+- Site oficial: https://nexocord.vercel.app/
+- Repositório: https://github.com/mitsukiie/NexoCord
 
 ## ✨ Features
 - ⚡ Setup em segundos
@@ -17,12 +16,12 @@ Nexo.js é um framework para criação de bots Discord modernos usando TypeScrip
 - 🔄 Compatível com Node.js e Bun
 - 📦 Suporte a ESM e CommonJS
 
-## 🤔 Por que usar Nexo.js?
+## 🤔 Por que usar Nexocord?
 
 Criar bots apenas com discord.js exige estrutura manual,
 carregamento de arquivos e muito boilerplate.
 
-O Nexo.js resolve isso oferecendo:
+O Nexocord resolve isso oferecendo:
 
 - estrutura pronta
 - carregamento automático
@@ -34,13 +33,13 @@ O Nexo.js resolve isso oferecendo:
 ## 📦 Instalação
 
 ```bash
-npm install @mitsuk/nexo.js discord.js
+npm install nexocord discord.js
 ```
 
 Com Bun:
 
 ```bash
-bun add @mitsuk/nexo.js discord.js
+bun add nexocord discord.js
 ```
 
 ## ⚙️ Configuração
@@ -54,7 +53,7 @@ TOKEN=seu_token_aqui
 Crie um arquivo de entrada (exemplo: `src/index.js`):
 
 ```js
-const { Bootstrap } = require('@mitsuk/nexo.js');
+const { Bootstrap } = require('nexocord');
 const { GatewayIntentBits } = require('discord.js');
 
 async function main() {
@@ -77,7 +76,7 @@ main()
 `src/commands/util/ping.ts`
 
 ```ts
-const { createCommand, CommandType } = require('@mitsuk/nexo.js');
+const { createCommand, CommandType } = require('nexocord');
 
 module.exports = createCommand({
     name: 'ping',
@@ -94,7 +93,7 @@ module.exports = createCommand({
 `src/events/ready.ts`
 
 ```ts
-const { createEvent } = require('@mitsuk/nexo.js');
+const { createEvent } = require('nexocord');
 
 module.exports = createEvent({
     name: 'ready',
@@ -106,7 +105,7 @@ module.exports = createEvent({
 ```
 
 ## 🧰 CLI
-O Nexo.js inclui uma CLI própria.
+O Nexocord inclui uma CLI própria.
 
 ```bash
 # desenvolvimento
@@ -136,7 +135,7 @@ src/
 
 ## 🚧 Status do projeto
 
-O Nexo.js está em desenvolvimento ativo.
+O Nexocord está em desenvolvimento ativo.
 Feedbacks e contribuições são bem-vindos!
 
 ## Licença

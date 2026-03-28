@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 # 🤖 Primeiro Bot
 
-Neste guia você vai criar seu primeiro bot funcional com Nexo.js.
+Neste guia você vai criar seu primeiro bot funcional com Nexocord.
 
 ---
 
@@ -48,7 +48,7 @@ Crie seu arquivo principal (por exemplo, `src/index.ts`) com a inicialização d
   <TabItem value="js" label="JavaScript">
 
 ```js
-const { Bootstrap } = require('@mitsuk/nexo.js');
+const { Bootstrap } = require('nexocord');
 const { GatewayIntentBits } = require('discord.js');
 
 async function main() {
@@ -69,7 +69,7 @@ main();
   <TabItem value="ts" label="TypeScript">
 
 ```ts
-import { Bootstrap } from '@mitsuk/nexo.js';
+import { Bootstrap } from 'nexocord';
 import { GatewayIntentBits } from 'discord.js';
 
 await Bootstrap.init({
@@ -101,7 +101,7 @@ Crie o arquivo do comando no diretório definido em `paths.commands` (exemplo: `
 	<TabItem value="js" label="JavaScript">
 
 ```js
-const { createCommand, CommandType } = require('@mitsuk/nexo.js');
+const { createCommand, CommandType } = require('nexocord');
 
 module.exports = createCommand({
   name: 'ping',
@@ -117,7 +117,7 @@ module.exports = createCommand({
   <TabItem value="ts" label="TypeScript">
 
 ```ts
-import { createCommand, CommandType } from '@mitsuk/nexo.js';
+import { createCommand, CommandType } from 'nexocord';
 
 export default createCommand({
   name: 'ping',
@@ -147,7 +147,7 @@ Crie o arquivo do evento no diretório definido em `paths.events` (exemplo: `src
 	<TabItem value="js" label="JavaScript">
 
 ```js
-const { createEvent, EventType } = require('@mitsuk/nexo.js');
+const { createEvent, EventType } = require('nexocord');
 
 module.exports = createEvent({
   name: 'ready',
@@ -162,7 +162,7 @@ module.exports = createEvent({
   <TabItem value="ts" label="TypeScript">
 
 ```ts
-import { createEvent, EventType } from '@mitsuk/nexo.js';
+import { createEvent, EventType } from 'nexocord';
 
 export default createEvent({
   name: 'ready',

@@ -1,13 +1,39 @@
 {
-  "name": "@mitsuk/nexo.js",
-  "version": "1.0.0",
+  "name": "nexocord",
+  "version": "1.0.1",
+  "description": "Framework TypeScript moderno para criar bots escaláveis ​​do Discord com discord.js v14, apresentando arquitetura modular, cli e utilitários amigáveis ​​para desenvolvedores.",
   "type": "module",
+  "private": false,
   "license": "MIT",
+  "author": {
+    "name": "Mitsuki",
+    "url": "https://github.com/mitsukiie"
+  },
+  "homepage": "https://github.com/mitsukiie/NexoCord#readme",
+  "bugs": {
+    "url": "https://github.com/mitsukiie/NexoCord/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mitsukiie/Nexo.js.git"
+    "url": "https://github.com/mitsukiie/NexoCord.git"
   },
-  "private": false,
+  "keywords": [
+    "discord",
+    "discordjs",
+    "discord-bot",
+    "discord-framework",
+    "discord-bot-framework",
+    "discordjs-v14",
+    "typescript",
+    "javascript",
+    "ts",
+    "js",
+    "framework",
+    "bot-framework",
+    "discord-template",
+    "cli",
+    "nexocord"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -31,6 +57,10 @@
   "main": "./dist/index.js",
   "bin": {
     "nexo": "./dist/bin/cli.js"
+  },
+  
+  "engines": {
+    "node": ">=20"
   },
   "scripts": {
     "build": "bun build src/index.ts --outdir dist --target node --format esm && bun build src/index.ts --target node --format cjs --outfile dist/index.cjs && bun build src/bin/cli.ts --outdir dist/bin --target node --format esm && bunx tsc --emitDeclarationOnly --outDir dist"

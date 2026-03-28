@@ -54,7 +54,7 @@ function run(cmd: string, args: string[]) {
 
 const log = {
   start: () =>
-    console.log("\n" + chalk.cyan.bold("🚀 Nexo.js")),
+    console.log("\n" + chalk.cyan.bold("🚀 Nexocord")),
 
   runtime: () =>
     console.log(
@@ -95,7 +95,7 @@ program
   .version("1.0.0")
   .addHelpText(
     "after",
-    `\n${chalk.cyan("Docs:")} ${chalk.gray("https://nexo-js.vercel.app/")}\n`
+    `\n${chalk.cyan("Docs:")} ${chalk.gray("https://nexocord.vercel.app/")}\n`
   );
 
 // ===== DEV =====

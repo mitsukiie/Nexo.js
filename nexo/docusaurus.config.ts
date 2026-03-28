@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'Nexo.js',
+  title: 'Nexocord',
   tagline: 'Crie bots Discord modernos com menos código e mais controle.',
   favicon: 'img/nexo.png',
 
@@ -60,9 +60,9 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'nexo.js docs',
+      title: 'nexocord docs',
       logo: {
-        alt: 'nexo.js Logo',
+        alt: 'nexocord Logo',
         src: 'img/nexo.png',
       },
       items: [
@@ -73,7 +73,7 @@ const config: Config = {
           label: 'Documentação',
         },
         {
-          href: 'https://github.com/mitsukiie/Nexo.js',
+          href: 'https://github.com/mitsukiie/Nexocord',
           label: 'GitHub',
           position: 'right',
         },
@@ -129,12 +129,12 @@ const config: Config = {
           items: [
             {
               label: 'Repositório no GitHub',
-              href: 'https://github.com/mitsukiie/Nexo.js',
+              href: 'https://github.com/mitsukiie/Nexocord',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} nexo.js docs. Feito com Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} nexocord docs. Feito com Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
