@@ -1,14 +1,20 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import { spawn } from "child_process";
+import { spawn, spawnSync } from "child_process";
 import path from "path";
 import fs from "fs";
 import chalk from "chalk";
+import { version } from "../../package.json";
 
 // ===== constants =====
 
 const isBun = typeof (globalThis as any).Bun !== "undefined";
+
+function hasRuntime(command: string): boolean {
+  const result = spawnSync(command, ["--version"], { stdio: "ignore" });
+  return !result.error && result.status === 0;
+}
 
 // ===== utils =====
 
@@ -92,7 +98,7 @@ program
       "Framework moderno para bots Discord com foco em DX e performance"
     )
   )
-  .version("1.0.0")
+  .version(version)
   .addHelpText(
     "after",
     `\n${chalk.cyan("Docs:")} ${chalk.gray("https://nexocord.vercel.app/")}\n`
@@ -105,25 +111,64 @@ program
   .description("Inicia o bot em modo desenvolvimento")
   .argument("[file]", "Arquivo de entrada")
   .option("-w, --watch", "Reinicia automaticamente ao salvar")
-  .action((file: string, options: any) => {
+  .option("-r, --runtime <runtime>", "Runtime: bun ou node", "auto")
+  .action((file: string | undefined, options: { watch?: boolean; runtime?: string }) => {
     const entry = resolveEntry(file);
     const env = getEnvFile();
-    const watch = options.watch;
+    const watch = Boolean(options.watch);
     const ext = entry.split(".").pop();
+    const hasBun = hasRuntime("bun");
+    const hasTsx = hasRuntime("tsx");
+    const runtime = (options.runtime ?? "auto").toLowerCase();
 
     log.start();
-    log.runtime();
+
+    const usingBun =
+      runtime === "bun" ||
+      (runtime === "auto" && (isBun || (ext === "ts" && !hasTsx && hasBun)));
+
+    if (runtime !== "auto" && runtime !== "bun" && runtime !== "node") {
+      log.error("Runtime inválido. Use: auto, bun ou node.");
+      process.exit(1);
+    }
+
+    console.log(
+      chalk.blue("⚙️ Runtime: ") +
+        chalk.magenta(usingBun ? "Bun" : "Node.js")
+    );
 
     if (env) log.env();
     if (watch) log.watch();
 
     // ===== BUN =====
-    if (isBun) {
-      return run("bun", ["run", entry]);
+    if (usingBun) {
+      if (!hasBun) {
+        log.error("Bun não encontrado no PATH.");
+        process.exit(1);
+      }
+
+      const args: string[] = [];
+      if (watch) args.push("--watch");
+      args.push(entry);
+
+      return run("bun", args);
     }
 
     // ===== TS =====
     if (ext === "ts") {
+      if (!hasTsx) {
+        if (hasBun) {
+          log.warn("tsx não encontrado, iniciando com Bun automaticamente.");
+          const bunArgs: string[] = [];
+          if (watch) bunArgs.push("--watch");
+          bunArgs.push(entry);
+          return run("bun", bunArgs);
+        }
+
+        log.error("Para rodar .ts no Node, instale tsx: npm i -D tsx");
+        process.exit(1);
+      }
+
       const args: string[] = [];
 
       if (watch) args.push("watch");

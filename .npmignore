@@ -1,5 +1,8 @@
 nexo
+bot
 src
+!dist/src
+!dist/src/**
 node_modules
 
 .gitignore

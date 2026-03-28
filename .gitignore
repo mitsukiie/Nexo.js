@@ -8,3 +8,6 @@ nexo/node_modules
 nexo/dist
 nexo/.docusaurus
 nexo/package-lock.json
+
+# test
+bot

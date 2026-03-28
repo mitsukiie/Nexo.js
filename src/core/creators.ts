@@ -14,7 +14,8 @@ import path from 'path';
 import { pathToFileURL } from 'url';
 
 
-import { ExtendedClient, App } from '@base';
+import { ExtendedClient } from './client/ExtendedClient';
+import { App } from './app';
 import {
   Command,
   CommandType,
@@ -22,8 +23,8 @@ import {
   Responder,
   ResponderParser,
   ResponderTypes,
-} from '@types';
-import { logger } from '@utils';
+} from './types';
+import { logger } from './utils';
 
 function Creators() {
   return {

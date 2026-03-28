@@ -10,7 +10,7 @@ import {
 
 import { ZodTypeAny, infer as zInfer } from 'zod/v3';
 
-import { RunResponder } from '@types';
+import type { RunResponder } from './Run';
 
 export enum ResponderType {
   Button = 'button',
