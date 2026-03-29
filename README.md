@@ -1,6 +1,6 @@
 # Nexocord
-![npm](https://img.shields.io/npm/v/%40mitsuk%2Fnexocord)
-![license](https://img.shields.io/npm/l/%40mitsuk%2Fnexocord)
+![npm](https://img.shields.io/npm/v/nexocord)
+![license](https://img.shields.io/npm/nexocord)
 
 Nexocord é um framework para criação de bots Discord modernos usando TypeScript ou JavaScript, focado em organização, produtividade e escalabilidade desde o primeiro arquivo.
 
