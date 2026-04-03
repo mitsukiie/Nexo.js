@@ -8,20 +8,67 @@ import TabItem from '@theme/TabItem';
 
 # 🤖 Primeiro Bot
 
-Neste guia você vai criar seu primeiro bot funcional com Nexocord.
+Neste guia você vai criar seu primeiro bot com o fluxo novo do Nexo.
 
 ---
 
-## 🚀 Como funciona
+## 🚀 Fluxo recomendado
+
+1. Crie o projeto:
+
+```bash
+npx nexo create meu-bot
+```
+
+2. Entre na pasta:
+
+```bash
+cd meu-bot
+```
+
+3. Inicie o bot em desenvolvimento:
+
+```bash
+npm run dev
+```
+
+---
+
+## 📁 Estrutura criada
+
+O template já vem com uma base pronta para começar:
+
+```
+📂 meu-bot/
+┣ 📂 src/
+┃ ┣ 📂 commands/
+┃ ┃ ┗ 📂 utils/
+┃ ┃   ┗ 📜 ping.ts
+┃ ┣ 📂 events/
+┃ ┃ ┗ 📜 ready.ts
+┃ ┗ 📜 index.ts
+┗ 📜 package.json
+```
+
+:::info Estrutura esperada
+O template cria uma estrutura inicial com o ponto de entrada em `src/index.ts`, um comando de exemplo em `src/commands/utils/ping.ts` e um evento de inicialização em `src/events/ready.ts`.
+:::
+
+---
+
+<details>
+<summary><strong>Criação Manual (Avançado)</strong></summary>
+
+Se você quiser montar a base sem o gerador, siga o fluxo antigo abaixo.
+
+### 🚀 Como funciona
 
 - 🧠 Você cria arquivos em pastas específicas.
 - 📁 Nexo carrega automaticamente comandos e eventos dos caminhos definidos em `paths.commands` e `paths.events`.
 - ⚡ O Bot inicia com `Bootstrap.init()`.
 - ✅ Não precisa de registro manual de comandos ou eventos.
 
----
-
-## 📁 Estrutura mínima (exemplo)
+### 📁 Estrutura mínima (exemplo)
 
 Exemplo de estrutura de pastas:
 
@@ -40,7 +87,7 @@ Este é apenas um exemplo usando `src/commands` e `src/events`.
 :::
 
 
-## 🚀 Inicializando o bot
+### 🚀 Inicializando o bot
 
 Crie seu arquivo principal (por exemplo, `src/index.ts`) com a inicialização do bot usando `Bootstrap.init()`:
 
@@ -93,7 +140,7 @@ await Bootstrap.init({
 - **`await`**: `Bootstrap.init()` é assíncrono e inicializa o bot.
 :::
 
-## 🔘 Primeiro comando
+### 🔘 Primeiro comando
 
 Crie o arquivo do comando no diretório definido em `paths.commands` (exemplo: `src/commands/util/ping.ts`):
 
@@ -139,7 +186,7 @@ export default createCommand({
 - **`interaction`**: Objeto da interação do Discord (contém dados do usuário, servidor, etc).
 :::
 
-## ✅ Evento de inicialização
+### ✅ Evento de inicialização
 
 Crie o arquivo do evento no diretório definido em `paths.events` (exemplo: `src/events/ready.ts`):
 
@@ -184,7 +231,7 @@ export default createEvent({
 - **`client`**: Cliente discord.js com dados do bot (usuário, guilds, etc).
 :::
 
-## ▶️ Executando o bot
+### ▶️ Executando o bot
 
 Rode o bot em modo desenvolvimento:
 
@@ -215,7 +262,7 @@ npx nexo dev
 bunx nexo dev
 ```
 
-## 🎯 Resultado esperado
+### 🎯 Resultado esperado
 
 Quando tudo funcionar:
 
@@ -228,9 +275,9 @@ Pronto! Seu primeiro bot está rodando! 🎉
 
 ---
 
-## 💡 Dicas rápidas
+### 💡 Dicas rápidas
 
-### 🔐 Token seguro
+#### 🔐 Token seguro
 
 Para não expor seu token no código:
 
@@ -248,7 +295,7 @@ DISCORD_TOKEN=MTA1Nzk4OTU5NzE2NzY0Nzc4Nw.xxx
 - Se expuser o token, **revogue-o imediatamente** no Dashboard do Discord
 :::
 
-### ⚠️ Erros comuns
+#### ⚠️ Erros comuns
 
 | Erro | Solução |
 |------|---------|
@@ -256,6 +303,8 @@ DISCORD_TOKEN=MTA1Nzk4OTU5NzE2NzY0Nzc4Nw.xxx
 | `Comando `/ping` não aparece` | Reinicie o bot ou execute `/` novamente para sincronizar comandos |
 | `Error: GUILDS intent is required` | Adicione `GatewayIntentBits.Guilds` aos intents |
 | `Bot não conecta` | Verifique token, internet e se o token não foi revogado |
+
+</details>
 
 **📚 Próximos passos:**
 - Leia [Comandos →](../guia/comandos.mdx) para aprender mais detalhes
