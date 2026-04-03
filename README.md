@@ -38,72 +38,29 @@ O Nexocord resolve isso oferecendo:
 npm install nexocord discord.js
 ```
 
+## ⚡ Primeiro bot com CLI
+
+```bash
+npx nexo create meu-bot
+cd meu-bot
+npx nexo dev
+```
+
+Esse fluxo já cria a base inicial do projeto para você começar sem montar estrutura manualmente.
+
 ## ⚙️ Configuração
 Crie um arquivo .env:
 ```txt
 TOKEN=seu_token_aqui
 ```
 
-## ⚡ Início rápido (JavaScript)
-
-Crie um arquivo de entrada (exemplo: `src/index.js`):
-
-```js
-const { Bootstrap } = require('nexocord');
-const { GatewayIntentBits } = require('discord.js');
-
-async function main() {
-    await Bootstrap.init({
-        token: process.env.TOKEN,
-        intents: [GatewayIntentBits.Guilds],
-        paths: {
-            commands: 'src/commands',
-            events: 'src/events',
-        },
-    });
-}
-
-main()
-```
-
-
-### 📝 Exemplo de comando
-
-`src/commands/util/ping.ts`
-
-```ts
-const { createCommand, CommandType } = require('nexocord');
-
-module.exports = createCommand({
-    name: 'ping',
-    description: 'Responde com pong!',
-    type: CommandType.ChatInput,
-    async run(interaction) {
-        await interaction.reply({ content: 'Pong!' });
-    },
-});
-```
-
-### 📡 Exemplo de evento
-
-`src/events/ready.ts`
-
-```ts
-const { createEvent } = require('nexocord');
-
-module.exports = createEvent({
-    name: 'ready',
-    once: true,
-    run(client) {
-        console.log(`Bot ${client.user?.username} está online!`);
-    },
-});
-```
-
 ## 🧰 CLI
 O Nexocord inclui uma CLI própria.
 
 ```bash
+# criar projeto
+npx nexo create meu-bot
+
 # desenvolvimento
 npx nexo dev
 
@@ -117,16 +74,18 @@ npx nexo dev --watch
 npx nexo start dist/bot.js
 ```
 
-## 📂 Estrutura sugerida
+## 📂 Estrutura criada pelo template
 
-```txt
-src/
-  commands/
-    util/
-      ping.ts
-  events/
-    ready.ts
-  index.ts
+```
+📂 meu-bot/
+┣ 📂 src/
+┃ ┣ 📂 commands/
+┃ ┃ ┗ 📂 utils/
+┃ ┃   ┗ 📜 ping.ts
+┃ ┣ 📂 events/
+┃ ┃ ┗ 📜 ready.ts
+┃ ┗ 📜 index.ts
+┗ 📜 package.json
 ```
 
 ## 🚧 Status do projeto

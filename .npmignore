@@ -1,15 +1,13 @@
-nexo
-bot
-src
-!dist/src
-!dist/src/**
-node_modules
+/nexo
+/bot
+/src
+/node_modules
 
-.gitignore
-.gitattributes
-.git
+/.gitignore
+/.gitattributes
+/.git
 
-bun.lock
+/bun.lock
 
-README.md
-LICENSE
+/README.md
+/LICENSE
